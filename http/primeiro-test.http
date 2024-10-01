@@ -1,0 +1,38 @@
+###
+# @name Hello World
+##
+GET http://localhost:8080/
+Accept: application/json
+Content-Type: application/json
+
+###
+# @name Post Hello World
+POST http://localhost:8080/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 30,
+  "marca": "Ford",
+  "ano": 2024,
+  "modelo": "Fusion"
+}
+
+###
+# @name PUT Hello World
+PUT http://localhost:8080/30
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 30,
+  "marca": "Ford",
+  "ano": 2024,
+  "modelo": "Fusion"
+}
+
+###
+# @name Delete Hello World
+DELETE http://localhost:8080/30
+Accept: application/json
+Content-Type: application/json
