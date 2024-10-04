@@ -1,5 +1,8 @@
 package br.com.eadtt.aula01.controller;
 
+import br.com.eadtt.aula01.Constants;
+import br.com.eadtt.aula01.controller.request.CarroRequest;
+import br.com.eadtt.aula01.controller.response.CarroResponse;
 import br.com.eadtt.aula01.model.Carro;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -8,23 +11,25 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/carros")
+@RequestMapping(Constants.V0 + "/carros")
 public class CarroController {
 
     // O path no REST identifica o recurso, ou a api
     @GetMapping(produces = "application/json")
-    public List<Carro> getAllCarros() {
-        return List.of(new Carro(1, "Ford", "Focus", 2019));
+    public CarroResponseList getAllCarros() {
+        CarroResponseList carroResponseList = new CarroResponseList(List.of(new CarroResponse(1, "Ford", "Focus", 2019)));
+        return carroResponseList;
     }
 
     @PostMapping()
-    public Carro createNewCarro(@RequestBody Carro carro) {
-        return carro;
+    public CarroResponse createNewCarro(@RequestBody CarroRequest request) {
+        return new CarroResponse();
     }
+
     @PutMapping(path = "/{id}")
-    public Carro updateCarroById(@RequestBody Carro carro, @PathVariable("id") Integer id) {
-        carro.setId(id);
-        return carro;
+    public CarroResponse updateCarroById(@RequestBody CarroRequest request, @PathVariable("id") Integer id) {
+
+        return new CarroResponse();
     }
 
     @DeleteMapping(path = "/{id}")
