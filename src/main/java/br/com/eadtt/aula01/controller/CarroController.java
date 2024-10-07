@@ -5,6 +5,7 @@ import br.com.eadtt.aula01.controller.request.CarroRequest;
 import br.com.eadtt.aula01.controller.response.CarroResponse;
 import br.com.eadtt.aula01.controller.response.CarroResponseList;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class CarroController {
     }
 
     @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     public CarroResponse createNewCarro(@RequestBody CarroRequest request) {
         return new CarroResponse();
     }
