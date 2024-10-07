@@ -1,6 +1,5 @@
-package br.com.eadtt.aula01.controller;
+package br.com.eadtt.aula01.controller.response;
 
-import br.com.eadtt.aula01.controller.response.CarroResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
