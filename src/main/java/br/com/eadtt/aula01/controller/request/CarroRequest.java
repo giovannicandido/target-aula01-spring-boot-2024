@@ -7,4 +7,5 @@ public class CarroRequest {
     private String marca;
     private String modelo;
     private Integer ano;
+    private String placaCarro;
 }

@@ -2,20 +2,26 @@ package br.com.eadtt.aula01.controller;
 
 import br.com.eadtt.aula01.Constants;
 import br.com.eadtt.aula01.controller.request.DeleteOficinaFilterRequest;
+import br.com.eadtt.aula01.controller.request.EntradaVeiculoRequest;
 import br.com.eadtt.aula01.controller.request.OficinaRequest;
 import br.com.eadtt.aula01.controller.request.MovimentacaoEstoqueRequest;
 import br.com.eadtt.aula01.controller.response.CarroResponseList;
+import br.com.eadtt.aula01.controller.response.ConfirmationMessage;
 import br.com.eadtt.aula01.controller.response.OficinaResponse;
 import br.com.eadtt.aula01.controller.response.OficinaResponseList;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping(Constants.V0 + "/oficinas")
+@Slf4j
 public class OficinaController {
 
     @GetMapping()
@@ -74,5 +80,26 @@ public class OficinaController {
     public CarroResponseList getSegurosCarroOficina(@PathVariable("id") Long id,
                                               @PathVariable("id-carro") Long idCarro) {
         return null;
+    }
+
+    @PostMapping("/{id}/actions/entrada")
+    public ProblemDetail entrarVeiculo(
+            @PathVariable("id") Long oficinaId,
+            @RequestBody EntradaVeiculoRequest entrada) {
+        log.info("Entrada de veiculo: {}", entrada);
+
+        ConfirmationMessage confirmationMessage = new ConfirmationMessage();
+        confirmationMessage.setStatus(ConfirmationMessage.Status.OK);
+        confirmationMessage.setConfirmationMessages(
+                List.of(new ConfirmationMessage.Message("Entrada de veiculo executada com sucesso", "ENTRADA_VEICULO_OK"))
+        );
+        // ProblemDetail é padronizado: https://apibestpractices.info/errors/problem-details
+        ProblemDetail problemDetail = ProblemDetail.forStatus(200);
+        problemDetail.setInstance(URI.create("/oficinas/%s/actions/entrada".formatted(oficinaId)));
+        problemDetail.setTitle("Entrada de veiculo");
+        problemDetail.setDetail("Entrada de veiculo executada com sucesso");
+        problemDetail.setType(URI.create("/api-doc/status/entrada-veiculo-executada-com-sucesso"));
+        return problemDetail;
+
     }
 }

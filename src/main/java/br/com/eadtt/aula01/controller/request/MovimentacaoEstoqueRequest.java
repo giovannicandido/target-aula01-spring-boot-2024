@@ -2,12 +2,10 @@ package br.com.eadtt.aula01.controller.request;
 
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class MovimentacaoEstoqueRequest {
-    private ActionId action;
-    private Long idPeca;
-    private LocalDate dataMovimentacao;
+    private List<Long> idPecas;
     private Long idLojaDestino;
 }
