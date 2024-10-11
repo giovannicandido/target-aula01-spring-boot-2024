@@ -49,13 +49,16 @@ public class CarroController {
 
     @PutMapping(path = "/{id}")
     public CarroResponse updateCarroById(@RequestBody CarroRequest request, @PathVariable("id") Integer id) {
-
-        return new CarroResponse();
+        Carro carroRequest = new Carro(id, request.getMarca(), request.getModelo(), request.getAno());
+        Carro carroSalvo = carroService.save(carroRequest);
+        CarroResponse carroResponse = new CarroResponse(carroSalvo.getId(), carroRequest.getMarca(), carroRequest.getModelo(), carroRequest.getAno());
+        return carroResponse;
     }
 
     @DeleteMapping(path = "/{id}")
     public void deleteCarroById(@PathVariable("id") Integer id) {
         log.info("Deletando carro de id %s".formatted(id));
+        carroService.deleteById(id);
     }
 
 

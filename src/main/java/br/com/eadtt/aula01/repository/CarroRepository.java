@@ -22,9 +22,20 @@ public class CarroRepository {
     }
 
     public Carro save(Carro carro) {
+        if(carro.getId() != null) {
+            carros.remove(carro);
+            carros.add(carro);
+            return carro;
+        }
+
         Integer id = carros.size() + 1;
         carro.setId(id);
         carros.add(carro);
         return carro;
+    }
+
+    public void deleteById(Integer id) {
+        Carro carro = new Carro(id, null, null, null);
+        carros.remove(carro);
     }
 }

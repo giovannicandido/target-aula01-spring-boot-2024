@@ -23,4 +23,8 @@ public class CarroService {
     public Carro save(Carro carro) {
         return carroRespository.save(carro);
     }
+
+    public void deleteById(Integer id) {
+        carroRespository.deleteById(id);
+    }
 }
