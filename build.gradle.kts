@@ -25,13 +25,17 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	compileOnly("org.projectlombok:lombok")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	compileOnly("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
 	// springfox (depreciado) e springdoc
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	// não vamos codificar para o driver então ele so esta disponivel em runtime
+	runtimeOnly("org.postgresql:postgresql:42.7.4")
 
 }
 
