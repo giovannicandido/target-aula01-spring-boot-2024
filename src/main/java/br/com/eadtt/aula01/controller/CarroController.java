@@ -17,7 +17,6 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping(Constants.V0 + "/carros")
-@Scope("session")
 public class CarroController {
     // Injeção por field - @Autowired
     // @Autowired

@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping(Constants.V0 + "/estoques")
 @Slf4j
-@Scope("session") // Escopo faz parte do ciclo de vida do spring com injeção. Escopo padrão é o singleton
 public class EstoqueController {
 
     private final CarroService carroService;

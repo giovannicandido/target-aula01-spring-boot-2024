@@ -2,13 +2,11 @@ package br.com.eadtt.aula01.service;
 
 import br.com.eadtt.aula01.model.Carro;
 import br.com.eadtt.aula01.repository.CarroRepository;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@Scope("prototype")
 public class CarroService {
     private final CarroRepository carroRespository;
 
