@@ -9,8 +9,11 @@ import br.com.eadtt.aula01.controller.response.CarroResponseList;
 import br.com.eadtt.aula01.controller.response.ConfirmationMessage;
 import br.com.eadtt.aula01.controller.response.OficinaResponse;
 import br.com.eadtt.aula01.controller.response.OficinaResponseList;
+import br.com.eadtt.aula01.model.Oficina;
+import br.com.eadtt.aula01.service.OficinaService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -22,28 +25,38 @@ import java.util.List;
 @RestController
 @RequestMapping(Constants.V0 + "/oficinas")
 @Slf4j
+@RequiredArgsConstructor
 public class OficinaController {
 
+    private final OficinaService oficinaService;
     @GetMapping()
     @ResponseBody
     public OficinaResponseList getAllOficinas() {
-        OficinaResponseList response = new OficinaResponseList(
-                List.of(new OficinaResponse(1L, "oficina1"), new OficinaResponse(2L,"oficina2"))
-        );
-        return response;
+        List<Oficina> oficinas = oficinaService.findAll();
+        List<OficinaResponse> oficinasResponse = oficinas.stream()
+                .map(oficina -> new OficinaResponse(oficina.getId(), oficina.getNome()))
+                .toList();
+        return new OficinaResponseList(oficinasResponse);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OficinaResponse createNewOficina(@RequestBody OficinaRequest oficinaRequest) {
-        return new OficinaResponse(333L, oficinaRequest.getNome());
+        Oficina model = new Oficina();
+        model.setNome(oficinaRequest.getNome());
+        Oficina saved = oficinaService.save(model);
+        return new OficinaResponse(saved.getId(), saved.getNome());
     }
 
     @PutMapping("/{id}")
     public OficinaResponse updateOficina(
-            @PathVariable(name = "id") Long id,
+            @PathVariable(name = "id") Integer id,
             @RequestBody OficinaRequest oficinaRequest) {
-        return new OficinaResponse(id, oficinaRequest.getNome());
+        Oficina model = new Oficina();
+        model.setId(id);
+        model.setNome(oficinaRequest.getNome());
+        Oficina saved = oficinaService.save(model);
+        return new OficinaResponse(saved.getId(), saved.getNome());
     }
 
     // Deletar em lote
@@ -51,14 +64,15 @@ public class OficinaController {
     public void updateOficina(
             @RequestBody DeleteOficinaFilterRequest filter
             ) {
-
+        // todo
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @DeleteMapping("/{id}")
     public void updateOficina(
-            @PathVariable(name = "id") Long id
+            @PathVariable(name = "id") Integer id
             ) {
-
+        oficinaService.deleteById(id);
     }
 
     // Faz mais sentido em um controlador de estoque
