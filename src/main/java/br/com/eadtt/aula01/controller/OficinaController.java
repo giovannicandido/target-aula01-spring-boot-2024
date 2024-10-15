@@ -9,6 +9,7 @@ import br.com.eadtt.aula01.controller.response.CarroResponseList;
 import br.com.eadtt.aula01.controller.response.ConfirmationMessage;
 import br.com.eadtt.aula01.controller.response.OficinaResponse;
 import br.com.eadtt.aula01.controller.response.OficinaResponseList;
+import br.com.eadtt.aula01.model.DeleteOficinaFilter;
 import br.com.eadtt.aula01.model.Oficina;
 import br.com.eadtt.aula01.service.OficinaService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -64,8 +65,9 @@ public class OficinaController {
     public void updateOficina(
             @RequestBody DeleteOficinaFilterRequest filter
             ) {
-        // todo
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        DeleteOficinaFilter filterModel = new DeleteOficinaFilter(filter.getIds(), filter.getNome());
+        oficinaService.deleteEmBatch(filterModel);
     }
 
     @DeleteMapping("/{id}")

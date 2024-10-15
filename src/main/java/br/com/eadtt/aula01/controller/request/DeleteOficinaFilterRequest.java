@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class DeleteOficinaFilterRequest {
-    private List<Long> ids;
+    private List<Integer> ids;
     private String nome;
 }

@@ -8,6 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Exemplo de como usar o EntityManager do JPA sem spring data
+ * O spring data usa o EntityManager para criar o padrão repository que ele implementada
+ * O spring data é mais produtivo
+ *
+ */
 @Repository
 @RequiredArgsConstructor
 public class CarroRepository {
