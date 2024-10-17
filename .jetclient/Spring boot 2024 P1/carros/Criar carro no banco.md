@@ -19,6 +19,7 @@ type = 'JSON'
 raw = '''
 {
   "marca": "Ford",
-  "ano": 2000
+  "ano": 2000,
+  "modelo": "Ford Ka"
 }'''
 ```

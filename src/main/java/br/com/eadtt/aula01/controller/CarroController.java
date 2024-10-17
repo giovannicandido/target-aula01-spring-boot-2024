@@ -5,6 +5,7 @@ import br.com.eadtt.aula01.controller.request.CarroRequest;
 import br.com.eadtt.aula01.controller.response.CarroResponse;
 import br.com.eadtt.aula01.controller.response.CarroResponseList;
 import br.com.eadtt.aula01.model.Carro;
+import br.com.eadtt.aula01.model.CarroFilter;
 import br.com.eadtt.aula01.service.CarroService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +31,9 @@ public class CarroController {
     @GetMapping(produces = "application/json")
     public CarroResponseList getAllCarros(@RequestParam(name = "marca", required = false) String marca,
                                           @RequestParam(name = "modelo", required = false) String modelo ) {
-        // Para multiplos filtros está bem ruim esse codigo, vamos mudar!
-        List<Carro> allCarros;
-        if(marca == null) {
-            allCarros = carroService.getAllCarros();
-        } else {
-            allCarros = carroService.getCarrosByMarca(marca);
-        }
+        CarroFilter carroFilter = new CarroFilter(marca, modelo);
 
-        if(modelo != null) {
-            allCarros = carroService.getCarrosByModelo(modelo);
-        }
+        List<Carro> allCarros = carroService.getCarrosByFilter(carroFilter);
 
         List<CarroResponse> carroResponseList = allCarros.stream()
                 .map(
