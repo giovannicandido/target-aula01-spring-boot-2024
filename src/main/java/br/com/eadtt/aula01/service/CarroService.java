@@ -3,6 +3,7 @@ package br.com.eadtt.aula01.service;
 import br.com.eadtt.aula01.model.Carro;
 import br.com.eadtt.aula01.repository.CarroRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,10 +19,12 @@ public class CarroService {
        return carroRespository.findAll();
     }
 
+    @Transactional
     public Carro save(Carro carro) {
         return carroRespository.save(carro);
     }
 
+    @Transactional
     public void deleteById(Integer id) {
         carroRespository.deleteById(id);
     }
