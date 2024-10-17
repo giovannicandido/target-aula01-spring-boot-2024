@@ -28,8 +28,20 @@ public class CarroController {
 
     // O path no REST identifica o recurso, ou a api
     @GetMapping(produces = "application/json")
-    public CarroResponseList getAllCarros() {
-        List<Carro> allCarros = carroService.getAllCarros();
+    public CarroResponseList getAllCarros(@RequestParam(name = "marca", required = false) String marca,
+                                          @RequestParam(name = "modelo", required = false) String modelo ) {
+        // Para multiplos filtros está bem ruim esse codigo, vamos mudar!
+        List<Carro> allCarros;
+        if(marca == null) {
+            allCarros = carroService.getAllCarros();
+        } else {
+            allCarros = carroService.getCarrosByMarca(marca);
+        }
+
+        if(modelo != null) {
+            allCarros = carroService.getCarrosByModelo(modelo);
+        }
+
         List<CarroResponse> carroResponseList = allCarros.stream()
                 .map(
                         carro -> new CarroResponse(carro.getId(), carro.getMarca(), carro.getModelo(), carro.getAno())

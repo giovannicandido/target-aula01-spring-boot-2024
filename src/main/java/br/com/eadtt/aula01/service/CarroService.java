@@ -28,4 +28,12 @@ public class CarroService {
     public void deleteById(Integer id) {
         carroRespository.deleteById(id);
     }
+
+    public List<Carro> getCarrosByMarca(String marca) {
+        return carroRespository.getAllByMarca(marca);
+    }
+
+    public List<Carro> getCarrosByModelo(String modelo) {
+        return carroRespository.getAllByModelo(modelo);
+    }
 }

@@ -1,10 +1,15 @@
 ```toml
-name = 'Criar carro no banco'
+name = 'Filtrar Carros'
 description = '/api/v0/carros'
-method = 'POST'
+method = 'GET'
 url = 'http://localhost:8080/api/v0/carros'
-sortWeight = 4000000
-id = '2d22688a-1a1e-4b91-adbb-3191e0cf4037'
+sortWeight = 6000000
+id = '06630ff7-e9bf-4c6a-adcc-8ec010f2c7cd'
+
+[[queryParams]]
+key = 'marca'
+value = 'Ford'
+disabled = true
 
 [[headers]]
 key = 'accept'
@@ -18,7 +23,6 @@ value = 'application/json'
 type = 'JSON'
 raw = '''
 {
-  "marca": "Ford",
-  "ano": 2000
+  "nome": "teste do swagger"
 }'''
 ```
