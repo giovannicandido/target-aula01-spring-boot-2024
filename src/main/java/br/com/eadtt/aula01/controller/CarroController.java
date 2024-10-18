@@ -42,6 +42,18 @@ public class CarroController {
         return new CarroResponseList(carroResponseList);
     }
 
+    @GetMapping("/por-ano")
+    public CarroResponseList getAllCarroPeloAno(@RequestParam(name = "ano") Integer ano) {
+
+        List<Carro> allCarros = carroService.getCarrosByAno(ano);
+
+        List<CarroResponse> carroResponseList = allCarros.stream()
+                .map(
+                        carro -> new CarroResponse(carro.getId(), carro.getMarca(), carro.getModelo(), carro.getAno())
+                ).toList();
+        return new CarroResponseList(carroResponseList);
+    }
+
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public CarroResponse createNewCarro(@RequestBody CarroRequest request) {

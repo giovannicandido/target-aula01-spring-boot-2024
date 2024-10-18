@@ -50,4 +50,9 @@ public class CarroService {
         return carroRespository.findAll(example, Sort.unsorted());
 
     }
+
+    public List<Carro> getCarrosByAno(Integer ano) {
+        // Geralmenta usa-se varios repositories
+        return carroRespository.getAllByAnoOrMarca(ano, "Ford");
+    }
 }
