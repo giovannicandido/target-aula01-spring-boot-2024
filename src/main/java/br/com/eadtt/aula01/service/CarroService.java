@@ -7,6 +7,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,29 +43,11 @@ public class CarroService {
     }
 
     public List<Carro> getCarrosByFilter(CarroFilter filters) {
-        String queryString = "select c from Carro c ";
-
-        if(filters.getModelo() != null || filters.getMarca() != null) {
-            queryString += " where ";
-        }
-
-        if (filters.getModelo() != null) {
-            queryString += " c.modelo = :modelo";
-        }
-
-        if (filters.getMarca() != null) {
-            queryString += " and c.marca = :marca";
-        }
-
-        TypedQuery<Carro> query = entityManager.createQuery(queryString, Carro.class);
-        if (filters.getModelo() != null) {
-            query.setParameter("modelo", filters.getModelo());
-        }
-
-        if (filters.getMarca() != null) {
-            query.setParameter("marca", filters.getMarca());
-        }
-        return query.getResultList();
+        Carro carro = new Carro();
+        carro.setMarca(filters.getMarca());
+        carro.setModelo(filters.getModelo());
+        Example<Carro> example = Example.of(carro);
+        return carroRespository.findAll(example, Sort.unsorted());
 
     }
 }

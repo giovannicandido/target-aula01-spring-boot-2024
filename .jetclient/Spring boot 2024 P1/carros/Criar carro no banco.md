@@ -18,8 +18,8 @@ value = 'application/json'
 type = 'JSON'
 raw = '''
 {
-  "marca": "Ford",
-  "ano": 2000,
-  "modelo": "Ford Ka"
+  "marca": "Fiat",
+  "ano": 2002,
+  "modelo": "Uno"
 }'''
 ```
