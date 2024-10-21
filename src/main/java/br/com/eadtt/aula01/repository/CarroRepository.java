@@ -28,7 +28,7 @@ public interface CarroRepository extends JpaRepository<Carro, Integer> {
 
     List<Carro> getAllByAnoOrMarca(Integer ano, String marca);
 
-    List<Carro> getAllByAnoLessThanAndMarcaContainingAndModeloAndSort(Integer ano, String marca, String modelo, Sort sort);
+    List<Carro> getAllByAnoLessThanAndMarcaContainingAndModelo(Integer ano, String marca, String modelo);
 
 
 

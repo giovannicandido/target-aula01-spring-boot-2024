@@ -3,6 +3,8 @@ package br.com.eadtt.aula01.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,4 +20,8 @@ public class Carro {
     private String marca;
     private String modelo;
     private Integer ano;
+
+    @ManyToOne
+    @JoinColumn(name = "carro_fabricante_id", nullable = false, foreignKey = @ForeignKey(name = "fk_carro_fabricante"))
+    private Fabricante fabricante;
 }
