@@ -11,7 +11,7 @@ public class Cliente {
     @Id
     private Integer id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_endereco_residencial_id", nullable = false, foreignKey = @ForeignKey(name = "fk_cliente_endereco_residencial"))
     private Endereco enderecoResidencial;
 

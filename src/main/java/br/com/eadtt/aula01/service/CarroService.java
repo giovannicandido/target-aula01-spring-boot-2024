@@ -2,7 +2,10 @@ package br.com.eadtt.aula01.service;
 
 import br.com.eadtt.aula01.model.Carro;
 import br.com.eadtt.aula01.model.CarroFilter;
+import br.com.eadtt.aula01.model.Fabricante;
+import br.com.eadtt.aula01.model.exceptions.FabricanteNaoExisteException;
 import br.com.eadtt.aula01.repository.CarroRepository;
+import br.com.eadtt.aula01.repository.FabricanteRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -18,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarroService {
     private final CarroRepository carroRespository;
+    private final FabricanteRepository fabricanteRepository;
     private final EntityManager entityManager;
 
     public List<Carro> getAllCarros() {
@@ -25,7 +29,10 @@ public class CarroService {
     }
 
     @Transactional
-    public Carro save(Carro carro) {
+    public Carro save(Carro carro, Integer fabricanteId) {
+        Fabricante fabricante = fabricanteRepository.findById(fabricanteId)
+                .orElseThrow(() -> new FabricanteNaoExisteException());
+        carro.setFabricante(fabricante);
         return carroRespository.save(carro);
     }
 

@@ -57,16 +57,16 @@ public class CarroController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public CarroResponse createNewCarro(@RequestBody CarroRequest request) {
-        Carro carroRequest = new Carro(null, request.getMarca(), request.getModelo(), request.getAno(), null);
-        Carro carroSalvo = carroService.save(carroRequest);
-        CarroResponse carroResponse = new CarroResponse(carroSalvo.getId(), carroRequest.getMarca(), carroRequest.getModelo(), carroRequest.getAno());
+        Carro carro = new Carro(null, request.getMarca(), request.getModelo(), request.getAno(), null, null);
+        Carro carroSalvo = carroService.save(carro, request.getFabricanteId());
+        CarroResponse carroResponse = new CarroResponse(carroSalvo.getId(), carro.getMarca(), carro.getModelo(), carro.getAno());
         return carroResponse;
     }
 
     @PutMapping(path = "/{id}")
     public CarroResponse updateCarroById(@RequestBody CarroRequest request, @PathVariable("id") Integer id) {
-        Carro carroRequest = new Carro(id, request.getMarca(), request.getModelo(), request.getAno(), null);
-        Carro carroSalvo = carroService.save(carroRequest);
+        Carro carroRequest = new Carro(id, request.getMarca(), request.getModelo(), request.getAno(), null, null);
+        Carro carroSalvo = carroService.save(carroRequest, request.getFabricanteId());
         CarroResponse carroResponse = new CarroResponse(carroSalvo.getId(), carroRequest.getMarca(), carroRequest.getModelo(), carroRequest.getAno());
         return carroResponse;
     }

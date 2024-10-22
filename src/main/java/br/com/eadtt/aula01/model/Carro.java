@@ -24,4 +24,7 @@ public class Carro {
     @ManyToOne
     @JoinColumn(name = "carro_fabricante_id", nullable = false, foreignKey = @ForeignKey(name = "fk_carro_fabricante"))
     private Fabricante fabricante;
+
+    @OneToOne
+    private Cliente dono;
 }

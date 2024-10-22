@@ -8,4 +8,5 @@ public class CarroRequest {
     private String modelo;
     private Integer ano;
     private String placaCarro;
+    private Integer fabricanteId;
 }

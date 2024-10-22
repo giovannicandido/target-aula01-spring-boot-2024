@@ -20,6 +20,7 @@ raw = '''
 {
   "marca": "Fiat",
   "ano": 2002,
-  "modelo": "Uno"
+  "modelo": "Uno",
+  "fabricanteId": 52
 }'''
 ```
