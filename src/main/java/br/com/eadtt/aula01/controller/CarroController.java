@@ -7,6 +7,7 @@ import br.com.eadtt.aula01.controller.response.CarroResponseList;
 import br.com.eadtt.aula01.model.Carro;
 import br.com.eadtt.aula01.model.CarroFilter;
 import br.com.eadtt.aula01.service.CarroService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -56,9 +57,9 @@ public class CarroController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public CarroResponse createNewCarro(@RequestBody CarroRequest request) {
+    public CarroResponse createNewCarro(@RequestBody @Valid CarroRequest request) {
         Carro carro = new Carro(null, request.getMarca(), request.getModelo(), request.getAno(), null, null);
-        Carro carroSalvo = carroService.save(carro, request.getFabricanteId());
+        Carro carroSalvo = carroService.save(carro, request.getFabricanteId(), request.getDonoId());
         CarroResponse carroResponse = new CarroResponse(carroSalvo.getId(), carro.getMarca(), carro.getModelo(), carro.getAno());
         return carroResponse;
     }
@@ -66,7 +67,7 @@ public class CarroController {
     @PutMapping(path = "/{id}")
     public CarroResponse updateCarroById(@RequestBody CarroRequest request, @PathVariable("id") Integer id) {
         Carro carroRequest = new Carro(id, request.getMarca(), request.getModelo(), request.getAno(), null, null);
-        Carro carroSalvo = carroService.save(carroRequest, request.getFabricanteId());
+        Carro carroSalvo = carroService.save(carroRequest, request.getFabricanteId(), request.getDonoId());
         CarroResponse carroResponse = new CarroResponse(carroSalvo.getId(), carroRequest.getMarca(), carroRequest.getModelo(), carroRequest.getAno());
         return carroResponse;
     }

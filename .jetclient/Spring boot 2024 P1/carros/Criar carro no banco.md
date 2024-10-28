@@ -21,6 +21,7 @@ raw = '''
   "marca": "Fiat",
   "ano": 2002,
   "modelo": "Uno",
-  "fabricanteId": 52
+  "fabricanteId": 52,
+  "donoId": 1000
 }'''
 ```

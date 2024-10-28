@@ -2,13 +2,12 @@ package br.com.eadtt.aula01.service;
 
 import br.com.eadtt.aula01.model.Carro;
 import br.com.eadtt.aula01.model.CarroFilter;
+import br.com.eadtt.aula01.model.Cliente;
 import br.com.eadtt.aula01.model.Fabricante;
-import br.com.eadtt.aula01.model.exceptions.FabricanteNaoExisteException;
+import br.com.eadtt.aula01.model.exceptions.EntityNotFoundInDatabaseException;
 import br.com.eadtt.aula01.repository.CarroRepository;
+import br.com.eadtt.aula01.repository.ClientRepository;
 import br.com.eadtt.aula01.repository.FabricanteRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
@@ -22,17 +21,23 @@ import java.util.List;
 public class CarroService {
     private final CarroRepository carroRespository;
     private final FabricanteRepository fabricanteRepository;
-    private final EntityManager entityManager;
+    private final ClientRepository clientRepository;
 
     public List<Carro> getAllCarros() {
         return carroRespository.findAll();
     }
 
     @Transactional
-    public Carro save(Carro carro, Integer fabricanteId) {
+    public Carro save(Carro carro, Integer fabricanteId, Integer donoId) {
         Fabricante fabricante = fabricanteRepository.findById(fabricanteId)
-                .orElseThrow(() -> new FabricanteNaoExisteException());
+                .orElseThrow(() -> new EntityNotFoundInDatabaseException("Fabricante", fabricanteId.toString()));
+
+        // Busca dados do cliente sem usar
+        Cliente cliente = clientRepository.findById(donoId)
+                        .orElseThrow(() -> new EntityNotFoundInDatabaseException("Cliente", donoId.toString()));
+
         carro.setFabricante(fabricante);
+        carro.setDono(cliente);
         return carroRespository.save(carro);
     }
 
