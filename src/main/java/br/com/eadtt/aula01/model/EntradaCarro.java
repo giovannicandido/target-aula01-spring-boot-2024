@@ -22,4 +22,6 @@ public class EntradaCarro {
     private Oficina oficina;
 
     private LocalDateTime dataEntrada;
+
+    private LocalDateTime dataSaida;
 }

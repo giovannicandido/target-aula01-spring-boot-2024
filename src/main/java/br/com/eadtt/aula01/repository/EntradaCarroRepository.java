@@ -28,4 +28,12 @@ public interface EntradaCarroRepository extends JpaRepository<EntradaCarro, Inte
                              where ent.oficina.id = :oficinaId
             """)
     List<CarroProjection> getCarroResumoEntradaByOficinaId(Integer oficinaId);
+    @Query(value = """
+                    select c.id as id, c.modelo as modelo, c.marca as marca
+                    from EntradaCarro ent
+                             join ent.carro c
+                             where ent.oficina.id = :oficinaId
+                             and ent.dataSaida is null 
+            """)
+    List<CarroProjection> getCarrosNaOficina(Integer oficinaId);
 }

@@ -3,8 +3,10 @@ package br.com.eadtt.aula01.service;
 import br.com.eadtt.aula01.model.Carro;
 import br.com.eadtt.aula01.model.DeleteOficinaFilter;
 import br.com.eadtt.aula01.model.Oficina;
+import br.com.eadtt.aula01.model.exceptions.EntityNotFoundInDatabaseException;
 import br.com.eadtt.aula01.repository.EntradaCarroRepository;
 import br.com.eadtt.aula01.repository.OficinaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,5 +64,17 @@ public class OficinaService {
                         .modelo(projection.getModelo())
                         .build())
                 .toList();
+    }
+
+    public boolean verificarOcupacao(Integer oficinaId) {
+        Oficina oficina = oficinaRepository.findById(oficinaId)
+                .orElseThrow(() -> new EntityNotFoundInDatabaseException("Oficina", oficinaId.toString()));
+
+        Long count = entradaCarroRepository.getCarrosNaOficina(oficinaId)
+                .stream().count();
+        // Por exemplo verificar tempo de ocupação maxima por veiculo e emitir um alerta.
+        // Consistencia eventual no alerta.
+        // Emitir o evento de alerta.
+        return oficina.getOcupacaoMaxima() <= count;
     }
 }

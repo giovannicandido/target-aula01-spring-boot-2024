@@ -17,4 +17,6 @@ public class Oficina {
 
     @Column(length = 50, unique = true, nullable = false)
     private String nome;
+
+    private Integer ocupacaoMaxima;
 }
