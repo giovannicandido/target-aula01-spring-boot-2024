@@ -1,7 +1,9 @@
 package br.com.eadtt.aula01.service;
 
+import br.com.eadtt.aula01.model.Carro;
 import br.com.eadtt.aula01.model.DeleteOficinaFilter;
 import br.com.eadtt.aula01.model.Oficina;
+import br.com.eadtt.aula01.repository.EntradaCarroRepository;
 import br.com.eadtt.aula01.repository.OficinaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OficinaService {
     private final OficinaRepository oficinaRepository;
+    private final EntradaCarroRepository entradaCarroRepository;
 
     public List<Oficina> findAll() {
         return oficinaRepository.findAll();
@@ -30,15 +33,34 @@ public class OficinaService {
 
     @Transactional
     public void deleteEmBatch(DeleteOficinaFilter filter) {
-        if(filter.getIds() != null && !filter.getIds().isEmpty()) {
+        if (filter.getIds() != null && !filter.getIds().isEmpty()) {
 //            oficinaRepository.deleteAllById(filter.getIds());
             oficinaRepository.deleteAllOficinaById(filter.getIds());
         }
         // trim tira espaco em branco
-        if(filter.getNome() != null && !filter.getNome().trim().isEmpty()) {
+        if (filter.getNome() != null && !filter.getNome().trim().isEmpty()) {
             String nomeLike = filter.getNome() + "%";
             oficinaRepository.deleteByNome(nomeLike);
         }
 
+    }
+
+    public List<Carro> findEntradasByOficina(Integer oficinaId) {
+        // usando query nativa
+//        return entradaCarroRepository.getAllByOficinaId(oficinaId)
+//                .stream().map(
+//                        objects -> new Carro(Integer.parseInt(objects[0].toString()), objects[1].toString(),
+//                                objects[1].toString(), null, null, null)
+//                ).toList();
+
+//        return entradaCarroRepository.getCarroEntradaByOficinaId(oficinaId);
+        return entradaCarroRepository.getCarroResumoEntradaByOficinaId(oficinaId)
+                .stream()
+                .map(projection -> Carro.builder()
+                        .id(projection.getId())
+                        .marca(projection.getMarca())
+                        .modelo(projection.getModelo())
+                        .build())
+                .toList();
     }
 }

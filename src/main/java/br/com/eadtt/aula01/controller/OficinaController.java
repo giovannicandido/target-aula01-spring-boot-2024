@@ -118,4 +118,9 @@ public class OficinaController {
         return problemDetail;
 
     }
+
+    @GetMapping("/{id}/entradas")
+    public CarroResponseList findEntradaByOficinaId(@PathVariable("id") Integer oficinaId) {
+        return CarroResponseList.fromModel(oficinaService.findEntradasByOficina(oficinaId));
+    }
 }

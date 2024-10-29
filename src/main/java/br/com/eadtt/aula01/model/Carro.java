@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "carro")
 @SequenceGenerator(name = "carro_seq", sequenceName = "carro_seq")
+@Builder
 public class Carro {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "carro_seq")
