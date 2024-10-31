@@ -6,9 +6,12 @@ import br.com.eadtt.aula01.model.Oficina;
 import br.com.eadtt.aula01.model.exceptions.EntityNotFoundInDatabaseException;
 import br.com.eadtt.aula01.repository.EntradaCarroRepository;
 import br.com.eadtt.aula01.repository.OficinaRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -18,12 +21,13 @@ import java.util.List;
 public class OficinaService {
     private final OficinaRepository oficinaRepository;
     private final EntradaCarroRepository entradaCarroRepository;
+    private final EntradaCarroService entradaCarroService;
 
     public List<Oficina> findAll() {
         return oficinaRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = EntityNotFoundInDatabaseException.class, value = "projetoMapsTransactionManager", transactionManager = "projetoMapsTransactionManager" )
     public Oficina save(Oficina oficina) {
         return oficinaRepository.save(oficina);
     }
@@ -44,6 +48,22 @@ public class OficinaService {
             String nomeLike = filter.getNome() + "%";
             oficinaRepository.deleteByNome(nomeLike);
         }
+
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void darBaixa(Oficina oficina) {
+        /// Checar status com a prefeitura
+        /// Dar baixa no estoque
+        // o @Transaction do metodo interno é ignorado
+        darBaixaEmEstoque(oficina);
+        /// Dar baixa nos carros
+        entradaCarroService.darBaixaEntrada(oficina.getId());
+    }
+
+    // chamada interna não tem proxy
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void darBaixaEmEstoque(Oficina oficina) {
 
     }
 

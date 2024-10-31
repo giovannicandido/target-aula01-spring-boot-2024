@@ -10,6 +10,6 @@ id = '04cf73f6-9b39-464c-8938-4b2adc01b553'
 type = 'JSON'
 raw = '''
 {
-   "nome": "Oficina teste" 
+   "nome": "Oficina teste 2" 
 }'''
 ```
