@@ -22,8 +22,7 @@ public class AtendimentoService {
     private AtendimentoRepository atendimentoRepository;
     private EntradaCarroService entradaCarroService;
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final KafkaTemplate<String, FinalizacaoAtendimento> kafkaTemplate;
 
     @Transactional
     public void finalizarAtendimento(Integer idAtendimento) {
@@ -47,13 +46,8 @@ public class AtendimentoService {
                 .dataFinalizacao(LocalDateTime.now())
                 .build();
 
-        String finalizacaoJson = null;
-        try {
-            finalizacaoJson = objectMapper.writeValueAsString(finalizacaoAtendimento);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
 
-        kafkaTemplate.send("atendimento", idAtendimento.toString(), finalizacaoJson);
+
+        kafkaTemplate.send("atendimento", idAtendimento.toString(), finalizacaoAtendimento);
     }
 }
