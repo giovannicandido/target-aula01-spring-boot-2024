@@ -95,6 +95,6 @@ public class OficinaService {
         // Por exemplo verificar tempo de ocupação maxima por veiculo e emitir um alerta.
         // Consistencia eventual no alerta.
         // Emitir o evento de alerta.
-        return oficina.getOcupacaoMaxima() <= count;
+        return oficina.getOcupacaoMaxima() >= count;
     }
 }
