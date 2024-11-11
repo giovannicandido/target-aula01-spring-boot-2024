@@ -38,6 +38,7 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	// não vamos codificar para o driver então ele so esta disponivel em runtime
 	runtimeOnly("org.postgresql:postgresql:42.7.4")
+	testImplementation("org.assertj:assertj-core")
 
 }
 
