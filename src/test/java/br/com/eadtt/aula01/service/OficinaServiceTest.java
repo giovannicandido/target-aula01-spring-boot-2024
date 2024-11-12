@@ -5,9 +5,11 @@ import br.com.eadtt.aula01.model.exceptions.EntityNotFoundInDatabaseException;
 import br.com.eadtt.aula01.repository.EntradaCarroRepository;
 import br.com.eadtt.aula01.repository.OficinaRepository;
 import br.com.eadtt.aula01.repository.result.CarroProjection;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +20,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-
+@ExtendWith(MockitoExtension.class)
 class OficinaServiceTest {
 
-    private OficinaRepository oficinaRepository = Mockito.mock(OficinaRepository.class);
-    private EntradaCarroRepository entradaCarroRepository = Mockito.mock(EntradaCarroRepository.class);
+    @Mock
+    private OficinaRepository oficinaRepository;
+    @Mock
+    private EntradaCarroRepository entradaCarroRepository;
 
-    private EntradaCarroService entradaCarroService = new EntradaCarroService(entradaCarroRepository);
+    @InjectMocks
+    private EntradaCarroService entradaCarroService;
+
 
     @Test
     void givenOficinaExistent_whenVeficarOcupacao_thenReturnCorrectCount() {
@@ -59,7 +65,7 @@ class OficinaServiceTest {
 //                .findById(2);
         doReturn(Optional.empty())
                 .when(oficinaRepository)
-                .findById(1);
+                .findById(2);
         OficinaService oficinaService = new OficinaService(oficinaRepository, entradaCarroRepository, entradaCarroService);
 
         Object entityName = assertThatThrownBy(() -> {
