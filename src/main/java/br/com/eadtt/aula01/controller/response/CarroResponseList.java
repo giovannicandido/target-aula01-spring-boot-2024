@@ -3,6 +3,7 @@ package br.com.eadtt.aula01.controller.response;
 import br.com.eadtt.aula01.model.Carro;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 //@ToString
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class CarroResponseList {
 
     private List<CarroResponse> carros;
