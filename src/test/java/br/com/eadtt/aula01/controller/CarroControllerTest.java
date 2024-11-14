@@ -6,7 +6,6 @@ import br.com.eadtt.aula01.controller.response.CarroResponseList;
 import br.com.eadtt.aula01.model.Carro;
 import br.com.eadtt.aula01.service.CarroService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

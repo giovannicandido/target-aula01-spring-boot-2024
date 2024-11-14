@@ -40,6 +40,12 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql:42.7.4")
 	testImplementation("org.assertj:assertj-core")
 
+	testImplementation("org.testcontainers:testcontainers:1.20.3")
+	testImplementation("org.testcontainers:postgresql:1.20.3")
+
+
+
+
 }
 
 tasks.withType<Test> {
