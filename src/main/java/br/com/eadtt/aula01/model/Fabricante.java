@@ -2,8 +2,7 @@ package br.com.eadtt.aula01.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,6 +10,9 @@ import java.util.List;
 @Getter
 @Setter
 @SequenceGenerator(name = "fabricante_seq", sequenceName = "fabricante_seq")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Fabricante {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fabricante_seq")

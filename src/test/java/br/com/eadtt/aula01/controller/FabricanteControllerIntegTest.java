@@ -1,32 +1,55 @@
 package br.com.eadtt.aula01.controller;
 
 
+import br.com.eadtt.aula01.data.FabricanteServiceData;
+import br.com.eadtt.aula01.repository.FabricanteRepository;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.kafka.KafkaContainer;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@Testcontainers
-class FabricanteControllerIntegTest {
+@AutoConfigureMockMvc
+class FabricanteControllerIntegTest extends TestContainerSetup {
 
-    @Container
-    static KafkaContainer kafka = new KafkaContainer("apache/kafka-native:3.8.0");
+    @Autowired
+    private MockMvc mockMvc;
 
+    @Autowired
+    private FabricanteServiceData fabricanteServiceData;
 
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.kafka.bootstrap-servers", () -> kafka.getBootstrapServers());
-        registry.add("oficina.kafka.bootstrap-servers", kafka::getBootstrapServers);
+    @Autowired
+    private FabricanteRepository fabricanteRepository;
+
+    // é OK fazer o setup dos dados no banco e limpar sempre apos cada testes enquanto o junit executa sequencialmente
+    // porem quando crescer e for executar em paralelo isso tem que ser revisto.
+    @BeforeEach
+    public void setup() {
+        fabricanteServiceData.create();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        fabricanteServiceData.clean();
     }
 
     @Test
-    void givenDataInDatase_shouldReturnAll() {
+    void givenDataInDatase_shouldReturnAll() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/v0/fabricantes"))
+                .andExpect(jsonPath("$.fabricantes", Matchers.hasSize(3)));
+    }
+
+    @Test
+    void givenDataInDatase_shouldReturnOne() throws Exception {
 
     }
 }

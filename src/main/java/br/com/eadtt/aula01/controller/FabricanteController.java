@@ -2,6 +2,7 @@ package br.com.eadtt.aula01.controller;
 
 import br.com.eadtt.aula01.Constants;
 import br.com.eadtt.aula01.controller.request.FabricanteDTO;
+import br.com.eadtt.aula01.controller.response.FabricanteResponseList;
 import br.com.eadtt.aula01.model.Endereco;
 import br.com.eadtt.aula01.model.Fabricante;
 import br.com.eadtt.aula01.service.FabricanteService;
@@ -30,12 +31,7 @@ public class FabricanteController {
     }
 
     @GetMapping
-    public List<Fabricante> getAll() {
-        List<Fabricante> fabricantes = fabricanteService.findAll();
-        return fabricantes;
-//        return fabricanteService.findAll()
-//                .stream()
-////                .map(FabricanteDTO::fromModel)
-//                .toList();
+    public FabricanteResponseList getAll() {
+        return FabricanteResponseList.fromModel(fabricanteService.findAll());
     }
 }

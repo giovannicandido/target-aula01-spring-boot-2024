@@ -1,13 +1,15 @@
 package br.com.eadtt.aula01.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @SequenceGenerator(name = "endereco_seq", sequenceName = "endereco_seq")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Endereco {
 
     @Id
