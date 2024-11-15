@@ -1,6 +1,7 @@
 package br.com.eadtt.aula01.service;
 
 import br.com.eadtt.aula01.model.Fabricante;
+import br.com.eadtt.aula01.model.exceptions.EntityNotFoundInDatabaseException;
 import br.com.eadtt.aula01.repository.FabricanteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,10 @@ public class FabricanteService {
 
     public List<Fabricante> findAll() {
         return fabricanteRepository.findAll();
+    }
+
+    public Fabricante findById(Integer id) {
+        return fabricanteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundInDatabaseException("Fabricante", id.toString()));
     }
 }

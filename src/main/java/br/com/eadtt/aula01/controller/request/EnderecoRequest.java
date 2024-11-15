@@ -1,12 +1,21 @@
 package br.com.eadtt.aula01.controller.request;
 
 import br.com.eadtt.aula01.model.Endereco;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class EnderecoRequest {
+    @NotBlank
     private String logradouro;
+
+    @NotNull
+    @Min(1)
     private Integer numero;
+
+    @NotBlank
     private String bairro;
 
     public static EnderecoRequest fromModel(Endereco endereco) {
