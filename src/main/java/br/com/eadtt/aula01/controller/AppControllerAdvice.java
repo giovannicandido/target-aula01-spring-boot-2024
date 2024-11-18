@@ -1,6 +1,7 @@
 package br.com.eadtt.aula01.controller;
 
 import br.com.eadtt.aula01.model.exceptions.EntityNotFoundInDatabaseException;
+import br.com.eadtt.aula01.model.exceptions.PaymentNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.*;
@@ -36,6 +37,16 @@ public class AppControllerAdvice extends ResponseEntityExceptionHandler {
         ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
         detail.setDetail("%s not found in Database with id %s".formatted(ex.getEntityName(), ex.getEntityId()));
         detail.setTitle("Entity not found in Database");
+        return detail;
+    }
+
+    @ExceptionHandler(PaymentNotFoundException.class)
+    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+    public ProblemDetail handleException(PaymentNotFoundException ex) {
+        log.info(ex.getMessage(), ex);
+        ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.PRECONDITION_FAILED);
+        detail.setTitle("Payment not found");
+        detail.setDetail(String.format("Cannot find payment for atendimento %s for client %s", ex.getAtendimentoId(), ex.getClientId()));
         return detail;
     }
 
