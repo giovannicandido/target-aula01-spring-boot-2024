@@ -22,6 +22,7 @@ raw = '''
   "ano": 1998,
   "modelo": "Fusca",
   "fabricanteId": 54,
-  "donoId": 1003
+  "donoId": 1002,
+  "placaCarro": "bah"
 }'''
 ```
