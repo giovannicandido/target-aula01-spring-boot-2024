@@ -7,6 +7,7 @@ import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ public class KafkaConfig {
 
 
     @Bean
+    @ConditionalOnProperty( value = "aula.create-topic", havingValue = "true")
     public NewTopic atendimento() {
         return new NewTopic(oficinaKafkaConfig.getAtendimentoTopic(), 1, (short) 1);
     }
