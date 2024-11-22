@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -42,6 +43,7 @@ public class OficinaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public OficinaResponse createNewOficina(@RequestBody OficinaRequest oficinaRequest) {
         Oficina model = new Oficina();
         model.setNome(oficinaRequest.getNome());
@@ -71,6 +73,7 @@ public class OficinaController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateOficina(
             @PathVariable(name = "id") Integer id
             ) {
@@ -99,6 +102,7 @@ public class OficinaController {
     }
 
     @PostMapping("/{id}/actions/entrada")
+    @PreAuthorize("hasRole('ROLE_NAOEXISTE')")
     public ProblemDetail entrarVeiculo(
             @PathVariable("id") Long oficinaId,
             @RequestBody EntradaVeiculoRequest entrada) {

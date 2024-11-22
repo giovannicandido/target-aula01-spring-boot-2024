@@ -2,6 +2,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.3.4"
 	id("io.spring.dependency-management") version "1.1.6"
+	kotlin("jvm")
 }
 
 group = "br.com.eadtt"
@@ -40,10 +41,15 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql:42.7.4")
 	testImplementation("org.assertj:assertj-core")
 
+	// Security
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+	implementation(libs.springAddons)
+
 	testImplementation("org.testcontainers:testcontainers:1.20.3")
 	testImplementation("org.testcontainers:postgresql:1.20.3")
 	testImplementation("org.testcontainers:kafka:1.20.3")
 	testImplementation("org.testcontainers:junit-jupiter:1.20.3")
+	implementation(kotlin("stdlib-jdk8"))
 
 
 }

@@ -1,0 +1,5 @@
+[versions]
+springAddons = "7.8.5"
+
+[libraries]
+springAddons = { group = "com.c4-soft.springaddons", name = "spring-addons-starter-oidc", version.ref = "springAddons" }

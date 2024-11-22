@@ -5,6 +5,7 @@ import br.com.eadtt.aula01.model.exceptions.PaymentNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.*;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -78,4 +79,14 @@ public class AppControllerAdvice extends ResponseEntityExceptionHandler {
         detail.setProperty("messages", validationMessages);
         return ResponseEntity.badRequest().body(detail);
     }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ProblemDetail handleException(AuthorizationDeniedException ex) {
+        ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
+        detail.setTitle("Authorization Denied");
+        return detail;
+    }
+
+
 }

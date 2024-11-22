@@ -1,10 +1,10 @@
 ```toml
-name = 'Post Oficina'
+name = 'Dar entrada'
 description = '/api/v0/oficinas'
 method = 'POST'
 url = 'http://localhost:8080/api/v0/oficinas/103/actions/entrada'
-sortWeight = 2000000
-id = '04cf73f6-9b39-464c-8938-4b2adc01b553'
+sortWeight = 7000000
+id = '57053c54-6129-44cb-88ec-941f0387030d'
 
 [[headers]]
 key = 'Authorization'
@@ -20,6 +20,6 @@ clientId = 'jetclient'
 type = 'JSON'
 raw = '''
 {
-   "nome": "Oficina nova" 
+   "idMecanico": 100
 }'''
 ```
